@@ -3,10 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AppPortal"
+        xmlns:local="clr-namespace:AppPortal" xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="App" MinHeight="450" MinWidth="800" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Loaded="Window_Loaded">
 
-    </Grid>
+    <Window.Resources>
+        <!-- Simple rounded button style -->
+        <Style x:Key="MaterialButton" TargetType="Button">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="#8A1538"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Toolbar -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Background="#8A1538" >
+            <Button Content="⏪" Style="{StaticResource MaterialButton}" Click="Back_Click"/>
+            <Button Content="⏩" Style="{StaticResource MaterialButton}" Click="Forward_Click"/>
+            <Button Content="🔄" Style="{StaticResource MaterialButton}" Click="Reload_Click"/>
+            <Button Content="🏠" Style="{StaticResource MaterialButton}" Click="Home_Click"/>
+            <Button Content="🌐" Style="{StaticResource MaterialButton}" Click="ToggleUrl_Click"/>
+
+            <!-- URL bar -->
+            <TextBox x:Name="UrlBar" Width="1000" Height="30" Margin="5" Visibility="Visible"/>
+        </StackPanel>
+
+        <!-- WebView2 -->
+        <wpf:WebView2 x:Name="WebView" Margin="5"/>
+    </DockPanel>
 </Window>
